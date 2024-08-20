@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap");
+
+.App {
+  width: 100vw;
+  min-height: 100vh;
+  background-image: url("./Google_Chat_Logo_512px.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.log {
+  width: 100%;
+  /* margin-left: 10px; */
+  border-width: 3px;
+  border-radius: 15px;
+  height: 40px;
+  background-color: rgb(232, 246, 251);
+  padding-left: 15px;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.281);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
