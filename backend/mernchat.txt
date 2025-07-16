@@ -1,6 +1,1 @@
-mongodb+srv://Himanshu8850:1234hima@cluster0.vgvthk5.mongodb.net/
 
-de5no9qmc
-
-
-CLOUDINARY_URL=cloudinary://781718261345868:zYP0KRSBdNwC7iCIIsBxURR1U0c@de5no9qmc
