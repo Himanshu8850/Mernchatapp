@@ -10,17 +10,27 @@ const userRoutes = require("./routes/Userroutes.js");
 const chatRoutes = require("./routes/chatRoutes.js");
 const messageRoutes = require("./routes/messageRoutes.js");
 const { notFound, errorhandler } = require("./middlewares/errorMiddleware.js");
+const path = require("path");
 connectdb();
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
 
-// app.get("/chat", (req, res) => {
-//   res.send(data);
-// });
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+
+//--------------- Deployment-----------------------------------
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/frontend/build")));
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is Running Successfully");
+  });
+}
+//-------------------------------------------------------
+
 app.get("/chat/:id", (req, res) => {
   const axe = data.find((c) => c.id === req.params.id);
   res.send(axe);

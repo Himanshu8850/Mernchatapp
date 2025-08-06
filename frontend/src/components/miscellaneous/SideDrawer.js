@@ -31,6 +31,7 @@ import ProfileModal from "./ProfileModal";
 import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../userAvatar/UserListItem";
 import { ChatState } from "../../Context/ChatProvider";
+import loadSecrets from "../../utils/loadSecrets";
 
 function SideDrawer() {
   const [search, setSearch] = useState("");
@@ -78,7 +79,7 @@ function SideDrawer() {
       };
 
       const { data } = await axios.get(
-        `http://localhost:5000/api/user?search=${search}`,
+        `${loadSecrets("API_BASE_URL")}/user?search=${search}`,
         config
       );
 
@@ -108,7 +109,7 @@ function SideDrawer() {
         },
       };
       const { data } = await axios.post(
-        `http://localhost:5000/api/chat`,
+        `${loadSecrets("API_BASE_URL")}/chat`,
         { userId },
         config
       );
@@ -149,12 +150,12 @@ function SideDrawer() {
           </Button>
         </Tooltip>
         <Text fontSize="2xl" fontFamily="Work sans">
-          Talk-A-Tive
+          ChatManiac
         </Text>
         <div>
           <Menu>
             <MenuButton p={1} position="relative">
-              <BellIcon fontSize="2xl" m={1} />
+              <BellIcon fontSize="2xl" m={1} color="green" />
               {notification.length > 0 && (
                 <Box
                   position="absolute"
@@ -169,7 +170,7 @@ function SideDrawer() {
                   justifyContent="center"
                   fontSize="10px"
                   fontWeight="bold"
-                  color="white"
+                  color="black" /* Changed text color to black for better contrast */
                   border="2px solid white"
                   zIndex="1"
                 >

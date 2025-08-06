@@ -8,9 +8,11 @@ import {
   InputGroup,
   Box,
   useToast,
+  Input,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import loadSecrets from "../../utils/loadSecrets";
 const Login = () => {
   const [email, setemail] = useState("");
   const [pass, setpass] = useState("");
@@ -50,7 +52,7 @@ const Login = () => {
       };
       const password = pass;
       const { data } = await axios.post(
-        "http://localhost:5000/api/user/login",
+        `${loadSecrets("API_BASE_URL")}/user/login`,
         { email, password },
         config
       );
@@ -80,9 +82,11 @@ const Login = () => {
   return (
     <VStack spacing="5px" minWidth="400px">
       <FormControl isRequired>
-        <FormLabel>Email</FormLabel>
-        <input
-          className="log"
+        <FormLabel color="white">Email</FormLabel>
+        <Input
+          placeholder="Email"
+          _placeholder={{ color: "gray.300" }} // Light placeholder color for visibility
+          color="white" // White text color for input
           type="text"
           value={email}
           onChange={(event) => {
@@ -92,10 +96,12 @@ const Login = () => {
       </FormControl>
 
       <FormControl isRequired>
-        <FormLabel>Password</FormLabel>
+        <FormLabel color="white">Password</FormLabel>
         <InputGroup>
-          <input
-            className="log"
+          <Input
+            placeholder="Password"
+            _placeholder={{ color: "gray.300" }} // Light placeholder color for visibility
+            color="white" // White text color for input
             type={show ? "text" : "Password"}
             value={pass}
             onChange={(event) => {

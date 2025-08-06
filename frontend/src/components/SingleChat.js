@@ -13,7 +13,12 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT = "http://localhost:5000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+import loadSecrets from "../utils/loadSecrets";
+
+const SOCKET_ENDPOINT = loadSecrets("BASE_URL");
+const API_ENDPOINT = loadSecrets("API_BASE_URL");
+
+// "https://chatmaniac.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -41,7 +46,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `http://localhost:5000/api/message/${selectedChat._id}`,
+        `${API_ENDPOINT}/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -72,7 +77,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "http://localhost:5000/api/message",
+          `${API_ENDPOINT}/message`,
           {
             content: newMessage,
             chatId: selectedChat,
@@ -94,7 +99,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
   useEffect(() => {
-    socket = io(ENDPOINT);
+    socket = io(SOCKET_ENDPOINT);
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
@@ -165,7 +170,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           display="flex"
           flexDirection="column"
           height="calc(100vh - 120px)"
-          bg="#E8E8E8"
+          bg="#f8f8f8" /* Light olive green background */
           borderRadius="lg"
           p={3}
           w="100%"
@@ -189,6 +194,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               <Text
                 fontSize={{ base: "28px", md: "30px" }}
                 fontFamily="Work sans"
+                color="#556b2f" /* Olive green text */
               >
                 {messages &&
                   (!selectedChat.isGroupChat
@@ -256,10 +262,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           >
             <Input
               variant="filled"
-              bg="#E0E0E0"
+              bg="#e0e0e0" /* Light gray for input */
               placeholder="Enter a message.."
               value={newMessage}
               onChange={typingHandler}
+              color="#3d3d3d" /* Dark text */
             />
           </FormControl>
         </Box>
