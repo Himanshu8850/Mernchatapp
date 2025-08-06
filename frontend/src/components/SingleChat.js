@@ -161,7 +161,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   return (
     <>
       {selectedChat ? (
-        <>
+        <Box
+          display="flex"
+          flexDirection="column"
+          height="calc(100vh - 120px)"
+          bg="#E8E8E8"
+          borderRadius="lg"
+          p={3}
+          w="100%"
+        >
+          {/* Header */}
           <Box
             display="flex"
             justifyContent="space-between"
@@ -202,65 +211,58 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 ))}
             </Box>
           </Box>
-          <Box
-            d="flex"
-            flexDir="column"
-            justifyContent="flex-end"
-            p={3}
-            bg="#E8E8E8"
-            w="100%"
-            h="100%"
-            borderRadius="lg"
-            overflowY="hidden"
-          >
-            {loading ? (
-              <Spinner
-                size="xl"
-                w={20}
-                h={20}
-                alignSelf="center"
-                margin="auto"
-              />
-            ) : (
-              <div className="messages">
-                <ScrollableChat messages={messages} />
-              </div>
-            )}
 
-            <FormControl
-              onKeyDown={sendMessage}
-              id="first-name"
-              isRequired
-              mt={3}
-            >
-              {istyping || typing ? (
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "4px",
-                      marginBottom: 15,
-                      marginLeft: 0,
-                    }}
-                  >
-                    <div className="typing-dot"></div>
-                    <div className="typing-dot"></div>
-                    <div className="typing-dot"></div>
-                  </div>
-                </div>
+          {/* Scrollable messages */}
+          <Box flex="1" overflowY="auto" mb={2}>
+            <div className="messages">
+              {loading ? (
+                <Spinner
+                  size="xl"
+                  w={20}
+                  h={20}
+                  alignSelf="center"
+                  margin="auto"
+                />
               ) : (
-                <></>
+                <ScrollableChat messages={messages} />
               )}
-              <Input
-                variant="filled"
-                bg="#E0E0E0"
-                placeholder="Enter a message.."
-                value={newMessage}
-                onChange={typingHandler}
-              />
-            </FormControl>
+            </div>
           </Box>
-        </>
+
+          {/* Typing indicator, if any */}
+          {(istyping || typing) && (
+            <div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "4px",
+                  marginBottom: 15,
+                  marginLeft: 0,
+                }}
+              >
+                <div className="typing-dot"></div>
+                <div className="typing-dot"></div>
+                <div className="typing-dot"></div>
+              </div>
+            </div>
+          )}
+
+          {/* Input at the bottom */}
+          <FormControl
+            onKeyDown={sendMessage}
+            id="first-name"
+            isRequired
+            mt={3}
+          >
+            <Input
+              variant="filled"
+              bg="#E0E0E0"
+              placeholder="Enter a message.."
+              value={newMessage}
+              onChange={typingHandler}
+            />
+          </FormControl>
+        </Box>
       ) : (
         // to get socket.io on same page
         <Box d="flex" alignItems="center" justifyContent="center" h="100%">
