@@ -50,7 +50,7 @@ const Login = () => {
       };
       const password = pass;
       const { data } = await axios.post(
-        "http://localhost:3000/api/user/login",
+        "http://localhost:5000/api/user/login",
         { email, password },
         config
       );
