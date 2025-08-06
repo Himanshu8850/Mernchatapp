@@ -12,7 +12,6 @@ import { useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import loadSecrets from "../../utils/loadSecrets";
 
 const Signup = () => {
   const toast = useToast();
@@ -46,7 +45,7 @@ const Signup = () => {
       data.append("file", pics);
       data.append("upload_preset", "chat app");
       data.append("cloud_name", "de5no9qmc");
-      fetch(loadSecrets("CLOUDINARY_URL"), {
+      fetch(process.env.REACT_APP_CLOUDINARY_URL, {
         method: "post",
         body: data,
       })
@@ -103,7 +102,7 @@ const Signup = () => {
       };
       const password = pass;
       const { data } = await axios.post(
-        `${loadSecrets("API_BASE_URL")}/user`,
+        `${process.env.REACT_APP_API_BASE_URL}/user`,
         { name, email, password, pic },
         config
       );

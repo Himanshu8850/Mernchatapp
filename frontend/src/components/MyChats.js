@@ -8,7 +8,6 @@ import ChatLoading from "./ChatLoading";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
-import loadSecrets from "../utils/loadSecrets";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -35,7 +34,7 @@ const MyChats = ({ fetchAgain }) => {
       };
 
       const { data } = await axios.get(
-        `${loadSecrets("API_BASE_URL")}/chat`,
+        `${process.env.REACT_APP_API_BASE_URL}/chat`,
         config
       );
       setChats(data);

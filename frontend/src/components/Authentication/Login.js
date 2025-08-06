@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import loadSecrets from "../../utils/loadSecrets";
 const Login = () => {
   const [email, setemail] = useState("");
   const [pass, setpass] = useState("");
@@ -52,7 +51,7 @@ const Login = () => {
       };
       const password = pass;
       const { data } = await axios.post(
-        `${loadSecrets("API_BASE_URL")}/user/login`,
+        `${process.env.REACT_APP_API_BASE_URL}/user/login`,
         { email, password },
         config
       );

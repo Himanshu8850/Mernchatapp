@@ -31,7 +31,6 @@ import ProfileModal from "./ProfileModal";
 import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../userAvatar/UserListItem";
 import { ChatState } from "../../Context/ChatProvider";
-import loadSecrets from "../../utils/loadSecrets";
 
 function SideDrawer() {
   const [search, setSearch] = useState("");
@@ -79,7 +78,7 @@ function SideDrawer() {
       };
 
       const { data } = await axios.get(
-        `${loadSecrets("API_BASE_URL")}/user?search=${search}`,
+        `${process.env.REACT_APP_API_BASE_URL}/user?search=${search}`,
         config
       );
 
@@ -109,7 +108,7 @@ function SideDrawer() {
         },
       };
       const { data } = await axios.post(
-        `${loadSecrets("API_BASE_URL")}/chat`,
+        `${process.env.REACT_APP_API_BASE_URL}/chat`,
         { userId },
         config
       );

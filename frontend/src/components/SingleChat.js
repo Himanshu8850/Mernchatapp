@@ -13,10 +13,9 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
-import loadSecrets from "../utils/loadSecrets";
 
-const SOCKET_ENDPOINT = loadSecrets("BASE_URL");
-const API_ENDPOINT = loadSecrets("API_BASE_URL");
+const SOCKET_ENDPOINT = process.env.REACT_APP_BASE_URL;
+const API_ENDPOINT = process.env.REACT_APP_API_BASE_URL;
 
 // "https://chatmaniac.herokuapp.com"; -> After deployment
 var socket, selectedChatCompare;
@@ -107,13 +106,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    fetchMessages();
-
-    selectedChatCompare = selectedChat;
-    // eslint-disable-next-line
-  }, [selectedChat]);
 
   useEffect(() => {
     fetchMessages();
