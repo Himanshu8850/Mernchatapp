@@ -77,7 +77,10 @@ function SideDrawer() {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `http://localhost:5000/api/user?search=${search}`,
+        config
+      );
 
       setLoading(false);
       setSearchResult(data);
@@ -104,7 +107,11 @@ function SideDrawer() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
+      const { data } = await axios.post(
+        `http://localhost:5000/api/chat`,
+        { userId },
+        config
+      );
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -146,13 +153,31 @@ function SideDrawer() {
         </Text>
         <div>
           <Menu>
-            <MenuButton p={1}>
-              {/* <NotificationBadge
-              effect={Effect.SCALE}
-              /> */}
+            <MenuButton p={1} position="relative">
               <BellIcon fontSize="2xl" m={1} />
+              {notification.length > 0 && (
+                <Box
+                  position="absolute"
+                  top="0"
+                  right="0"
+                  bg="red"
+                  borderRadius="full"
+                  w="18px"
+                  h="18px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  fontSize="10px"
+                  fontWeight="bold"
+                  color="white"
+                  border="2px solid white"
+                  zIndex="1"
+                >
+                  {notification.length > 9 ? "9+" : notification.length}
+                </Box>
+              )}
             </MenuButton>
-            {/* <MenuList pl={2}>
+            <MenuList pl={2}>
               {!notification.length && "No New Messages"}
               {notification.map((notif) => (
                 <MenuItem
@@ -167,7 +192,7 @@ function SideDrawer() {
                     : `New Message from ${getSender(user, notif.chat.users)}`}
                 </MenuItem>
               ))}
-            </MenuList> */}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>

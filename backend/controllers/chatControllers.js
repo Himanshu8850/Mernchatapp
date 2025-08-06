@@ -173,6 +173,29 @@ const addToGroup = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteGroupChat = asyncHandler(async (req, res) => {
+  const { chatId } = req.body;
+
+  // Check if chat exists
+  const chat = await Chat.findById(chatId);
+
+  if (!chat) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  }
+
+  // Check if user is admin
+  if (chat.groupAdmin.toString() !== req.user._id.toString()) {
+    res.status(403);
+    throw new Error("Only admin can delete the group");
+  }
+
+  // Delete the chat
+  await Chat.findByIdAndDelete(chatId);
+
+  res.json({ message: "Group deleted successfully" });
+});
+
 module.exports = {
   accessChat,
   fetchChats,
@@ -180,4 +203,5 @@ module.exports = {
   renameGroup,
   addToGroup,
   removeFromGroup,
+  deleteGroupChat,
 };

@@ -1,4 +1,4 @@
-import { ViewIcon } from "@chakra-ui/icons";
+import { ViewIcon, DeleteIcon } from "@chakra-ui/icons";
 import {
   Modal,
   ModalOverlay,
@@ -15,6 +15,12 @@ import {
   Box,
   IconButton,
   Spinner,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
@@ -29,6 +35,8 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [renameloading, setRenameLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
   const toast = useToast();
 
   const { selectedChat, setSelectedChat, user } = ChatState();
@@ -46,7 +54,10 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `http://localhost:5000/api/user?search=${search}`,
+        config
+      );
       console.log(data);
       setLoading(false);
       setSearchResult(data);
@@ -74,7 +85,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.put(
-        `/api/chat/rename`,
+        `http://localhost:5000/api/chat/rename`,
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -132,7 +143,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.put(
-        `/api/chat/groupadd`,
+        `http://localhost:5000/api/chat/groupadd`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -177,7 +188,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.put(
-        `/api/chat/groupremove`,
+        `http://localhost:5000/api/chat/groupremove`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -201,6 +212,49 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       setLoading(false);
     }
     setGroupChatName("");
+  };
+
+  const handleDeleteGroup = async () => {
+    try {
+      setDeleteLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.delete(
+        `http://localhost:5000/api/chat/delete`,
+        {
+          data: { chatId: selectedChat._id },
+          headers: config.headers,
+        }
+      );
+
+      toast({
+        title: "Group deleted successfully!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+
+      setSelectedChat();
+      setFetchAgain(!fetchAgain);
+      onClose();
+      setIsDeleteAlertOpen(false);
+    } catch (error) {
+      toast({
+        title: "Error occurred!",
+        description: error.response?.data?.message || "Failed to delete group",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    } finally {
+      setDeleteLoading(false);
+    }
   };
 
   return (
@@ -269,12 +323,55 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={() => handleRemove(user)} colorScheme="red">
+            <Button onClick={() => handleRemove(user)} colorScheme="red" mr={3}>
               Leave Group
             </Button>
+            {selectedChat.groupAdmin._id === user._id && (
+              <Button
+                onClick={() => setIsDeleteAlertOpen(true)}
+                colorScheme="red"
+                variant="outline"
+                leftIcon={<DeleteIcon />}
+              >
+                Delete Group
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
+
+      {/* Delete Confirmation Alert */}
+      <AlertDialog
+        isOpen={isDeleteAlertOpen}
+        onClose={() => setIsDeleteAlertOpen(false)}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Group
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you want to delete "{selectedChat.chatName}"? This
+              action cannot be undone.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button onClick={() => setIsDeleteAlertOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={handleDeleteGroup}
+                ml={3}
+                isLoading={deleteLoading}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 };

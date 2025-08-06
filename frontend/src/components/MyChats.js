@@ -12,7 +12,15 @@ import { ChatState } from "../Context/ChatProvider";
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
 
-  const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
+  const {
+    selectedChat,
+    setSelectedChat,
+    user,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
 
   const toast = useToast();
 
@@ -25,12 +33,16 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await axios.get(
+        "http://localhost:5000/api/chat",
+        config
+      );
       setChats(data);
     } catch (error) {
+      console.log(error);
       toast({
         title: "Error Occured!",
-        description: "Failed to Load the chats",
+        description: "error",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -91,7 +103,13 @@ const MyChats = ({ fetchAgain }) => {
           <Stack overflowY="scroll">
             {chats.map((chat) => (
               <Box
-                onClick={() => setSelectedChat(chat)}
+                onClick={() => {
+                  setSelectedChat(chat);
+                  // Clear notifications for this chat
+                  setNotification(
+                    notification.filter((n) => n.chat._id !== chat._id)
+                  );
+                }}
                 cursor="pointer"
                 bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
