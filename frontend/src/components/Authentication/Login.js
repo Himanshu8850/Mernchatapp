@@ -51,7 +51,7 @@ const Login = () => {
       };
       const password = pass;
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/user/login`,
+        "https://mernchatapp-gpg8.onrender.com/api/user/login",
         { email, password },
         config
       );

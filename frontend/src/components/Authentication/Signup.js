@@ -102,7 +102,7 @@ const Signup = () => {
       };
       const password = pass;
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/user`,
+        "https://mernchatapp-gpg8.onrender.com/api/user",
         { name, email, password, pic },
         config
       );
