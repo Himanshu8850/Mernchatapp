@@ -5,12 +5,14 @@ import {
   VStack,
   Button,
   InputGroup,
+  Input,
   background,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 const Signup = () => {
   const toast = useToast();
   const [name, setname] = useState("");
@@ -43,7 +45,7 @@ const Signup = () => {
       data.append("file", pics);
       data.append("upload_preset", "chat app");
       data.append("cloud_name", "de5no9qmc");
-      fetch("https://api.cloudinary.com/v1_1/de5no9qmc/image/upload", {
+      fetch(process.env.REACT_APP_CLOUDINARY_URL, {
         method: "post",
         body: data,
       })
@@ -100,7 +102,7 @@ const Signup = () => {
       };
       const password = pass;
       const { data } = await axios.post(
-        "http://localhost:5000/api/user",
+        `${process.env.REACT_APP_API_BASE_URL}/user`,
         { name, email, password, pic },
         config
       );
@@ -130,35 +132,44 @@ const Signup = () => {
   return (
     <VStack spacing="5px">
       <FormControl isRequired>
-        <FormLabel>Name</FormLabel>
-        <input
+        <FormLabel color="white">Name</FormLabel>
+        <Input
           className="log"
           type="text"
           onChange={(event) => {
             setname(event.target.value);
           }}
+          bg="rgba(255, 255, 255, 0.1)" // Match background color with Login
+          color="white" // Ensure text is visible
+          _placeholder={{ color: "gray.300" }}
         />
       </FormControl>
       <FormControl isRequired>
-        <FormLabel>Email</FormLabel>
-        <input
+        <FormLabel color="white">Email</FormLabel>
+        <Input
           className="log"
           type="text"
           onChange={(event) => {
             setemail(event.target.value);
           }}
+          bg="rgba(255, 255, 255, 0.1)" // Match background color with Login
+          color="white" // Ensure text is visible
+          _placeholder={{ color: "gray.300" }}
         />
       </FormControl>
 
       <FormControl isRequired>
-        <FormLabel>Password</FormLabel>
+        <FormLabel color="white">Password</FormLabel>
         <InputGroup>
-          <input
+          <Input
             className="log"
-            type={show ? "text" : "Password"}
+            type={show ? "text" : "password"}
             onChange={(event) => {
               setpass(event.target.value);
             }}
+            bg="rgba(255, 255, 255, 0.1)" // Match background color with Login
+            color="white" // Ensure text is visible
+            _placeholder={{ color: "gray.300" }}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={handleclick}>
@@ -169,14 +180,16 @@ const Signup = () => {
       </FormControl>
 
       <FormControl isRequired>
-        <FormLabel>ConfirmPassword</FormLabel>
+        <FormLabel color="white">Confirm Password</FormLabel>
         <InputGroup>
-          <input
+          <Input
             className="log"
-            type={show ? "text" : "Password"}
+            type={show ? "text" : "password"} // Changed to Chakra UI Input for consistency
             onChange={(event) => {
               setconpass(event.target.value);
             }}
+            color="white" // Ensure text is visible
+            _placeholder={{ color: "gray.300" }}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={handleclick}>
@@ -187,7 +200,7 @@ const Signup = () => {
       </FormControl>
 
       <FormControl isRequired>
-        <FormLabel>Pic</FormLabel>
+        <FormLabel color="white">Pic</FormLabel>
         <input
           p={1.5}
           accept="image/*"

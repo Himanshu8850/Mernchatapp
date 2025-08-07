@@ -3,20 +3,18 @@
 .App {
   width: 100vw;
   min-height: 100vh;
-  background-image: url("./Google_Chat_Logo_512px.png");
-  background-size: cover;
-  background-position: center;
+  background-color: #f0f8ff; /* Light blue background */
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .log {
   width: 100%;
-  /* margin-left: 10px; */
   border-width: 3px;
   border-radius: 15px;
   height: 40px;
-  background-color: rgb(232, 246, 251);
+  background-color: #e0f7fa; /* Light blue for input */
   padding-left: 15px;
 }
 
@@ -25,10 +23,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(136, 136, 136, 0.281);
+  background: #556b2f; /* Olive green scrollbar thumb */
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #6b8e23; /* Slightly lighter olive green on hover */
 }

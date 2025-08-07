@@ -78,7 +78,7 @@ function SideDrawer() {
       };
 
       const { data } = await axios.get(
-        `http://localhost:5000/api/user?search=${search}`,
+        `${process.env.REACT_APP_API_BASE_URL}/user?search=${search}`,
         config
       );
 
@@ -108,7 +108,7 @@ function SideDrawer() {
         },
       };
       const { data } = await axios.post(
-        `http://localhost:5000/api/chat`,
+        `${process.env.REACT_APP_API_BASE_URL}/chat`,
         { userId },
         config
       );
@@ -149,12 +149,12 @@ function SideDrawer() {
           </Button>
         </Tooltip>
         <Text fontSize="2xl" fontFamily="Work sans">
-          Talk-A-Tive
+          ChatManiac
         </Text>
         <div>
           <Menu>
             <MenuButton p={1} position="relative">
-              <BellIcon fontSize="2xl" m={1} />
+              <BellIcon fontSize="2xl" m={1} color="green" />
               {notification.length > 0 && (
                 <Box
                   position="absolute"
@@ -169,7 +169,7 @@ function SideDrawer() {
                   justifyContent="center"
                   fontSize="10px"
                   fontWeight="bold"
-                  color="white"
+                  color="black" /* Changed text color to black for better contrast */
                   border="2px solid white"
                   zIndex="1"
                 >
