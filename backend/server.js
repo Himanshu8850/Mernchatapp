@@ -40,7 +40,7 @@ app.get("/chat/:id", (req, res) => {
 app.use(notFound);
 app.use(errorhandler);
 
-const PORT = 5000;
+const PORT = 5001;
 
 const server = app.listen(PORT, () => {
   console.log(`port:${PORT}`.yellow.bold);
