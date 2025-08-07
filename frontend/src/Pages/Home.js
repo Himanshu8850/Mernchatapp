@@ -26,14 +26,10 @@ function Home() {
     <Container
       minH="100vh"
       minWidth="100vw"
-      backgroundImage="url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGNoYXQlMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTY5MTM5NjAwMA&ixlib=rb-1.2.1&q=80&w=1080')" // Updated to a reliable static image URL
-      backgroundSize="cover"
-      backgroundPosition="center"
-      backgroundRepeat="no-repeat" // Ensure no repeat of the image
-      display="flex" // Use flex to align children properly
-      flexDirection="column" // Stack children vertically
-      alignItems="center" // Center children horizontally
-      justifyContent="center" // Center children vertically
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
     >
       <Box
         d="flex"
@@ -68,14 +64,14 @@ function Home() {
           <TabList>
             <Tab
               width="50%"
-              color="yellow" // Changed font color to yellow for better visibility
+              color="white"
               _selected={{ bg: "teal.500", color: "white" }}
             >
               Tab 1
             </Tab>
             <Tab
               width="50%"
-              color="yellow" // Changed font color to yellow for better visibility
+              color="white"
               _selected={{ bg: "teal.500", color: "white" }}
             >
               Tab 2
