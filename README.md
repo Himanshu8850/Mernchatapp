@@ -20,7 +20,7 @@ A real-time chat application built with the **MERN** stack (MongoDB, Express, Re
 ---
 
 ## 🖥️ Demo
-
+https://mernchatapp-1-9rfm.onrender.com/
 ---
 
 ## 🛠️ Tech Stack
