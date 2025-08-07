@@ -78,7 +78,7 @@ function SideDrawer() {
       };
 
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/user?search=${search}`,
+        `https://mernchatapp-gpg8.onrender.com/api/user?search=${search}`,
         config
       );
 
@@ -108,7 +108,7 @@ function SideDrawer() {
         },
       };
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/chat`,
+        "https://mernchatapp-gpg8.onrender.com/api/chat",
         { userId },
         config
       );

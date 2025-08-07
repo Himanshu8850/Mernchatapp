@@ -14,10 +14,7 @@ import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 
-const SOCKET_ENDPOINT = process.env.REACT_APP_BASE_URL;
-const API_ENDPOINT = process.env.REACT_APP_API_BASE_URL;
-
-// "https://chatmaniac.herokuapp.com"; -> After deployment
+const ENDPOINT = "https://mernchatapp-gpg8.onrender.com/";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -45,7 +42,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `${API_ENDPOINT}/message/${selectedChat._id}`,
+        `https://mernchatapp-gpg8.onrender.com/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -76,7 +73,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          `${API_ENDPOINT}/message`,
+          "https://mernchatapp-gpg8.onrender.com/api/message",
           {
             content: newMessage,
             chatId: selectedChat,
@@ -98,7 +95,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
   useEffect(() => {
-    socket = io(SOCKET_ENDPOINT);
+    socket = io(ENDPOINT);
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
