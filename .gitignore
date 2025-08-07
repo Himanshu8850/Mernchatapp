@@ -4,3 +4,4 @@ mernchat.txt
 # Environments
 backend/.env
 frontend/.env
+frontend/.env.development
