@@ -67,14 +67,14 @@ function Home() {
               color="white"
               _selected={{ bg: "teal.500", color: "white" }}
             >
-              Tab 1
+              Login
             </Tab>
             <Tab
               width="50%"
               color="white"
               _selected={{ bg: "teal.500", color: "white" }}
             >
-              Tab 2
+              Sign Up
             </Tab>
           </TabList>
           <TabPanels>
@@ -92,3 +92,4 @@ function Home() {
 }
 
 export default Home;
+
