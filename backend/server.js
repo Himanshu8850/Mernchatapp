@@ -32,11 +32,6 @@ if (process.env.NODE_ENV === "production") {
 }
 //-------------------------------------------------------
 
-app.get("/chat/:id", (req, res) => {
-  const axe = data.find((c) => c.id === req.params.id);
-  res.send(axe);
-});
-
 app.use(notFound);
 app.use(errorhandler);
 
